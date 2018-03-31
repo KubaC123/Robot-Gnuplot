@@ -1,0 +1,99 @@
+#ifndef OBIEKT2D_HH
+#define OBIEKT2D_HH
+#include "Wierzcholki.hh"
+#include "Macierz2x2.hh"
+
+
+/*!
+ * \file Obiekt2D.hh
+ *  Plik zawiera definicje klasy Obiekt2D,
+ *  ktora reprezentuje obiekty w dwuwymiarowym ukladzie wspolrzednych.
+ */
+
+
+/*!
+ * \brief Klasa modeluje obiekt, zbior wierzcholkow, w dwuwymiarowym ukladzie wspolrzednych.
+ *
+ * Klasa modeluje obiekt, zbior wierzcholkow, w dwuwymiarowym ukladzie wspolrzednych
+ * Klasa zawiera metody pozwalajace na tworzenie i operowanie na obiektach.
+ */
+
+class Obiekt2D
+{
+    /* Tablica pozwalajaca na przechowywanie wierzcholkow. */
+    Wierzcholki Tab_Wierzcholkow;
+    /* Pole statyczne. Pozwala przechowywac wektor translacji dla wszystkich obiektow. */
+    static Wektor2D WektorTranslacji;
+public:
+    /*!
+     * \brief Przeciazenie operatora indeksowania.
+     *
+     * Przeciazenie operatora indeksowania.
+     * param[in] - numer elementu do jakiego chcemy sie dostac.
+     */
+    Wektor2D operator [] (int Ind) const { return Tab_Wierzcholkow[Ind]; }
+    
+    /*!
+     * \brief Metoda zwracajaca wektor translacji.
+     *
+     * Metoda zwracajaca wektor translacji.
+     */
+    static Wektor2D Translacyjny() { return WektorTranslacji; }
+    
+    /*!
+     * \brief Metoda pozwalajaca na dodanie do tablicy wierzcholkow nowego wierzcholka.
+     *
+     * Metoda pozwalajaca na dodanie do tablicy wierzcholkow nowego wierzcholka.
+     * param[in] - wektor reprezentujacy nowy wierzcholek.
+     */
+    void DodajWierz(Wektor2D W) { Tab_Wierzcholkow.DodajWierzcholek(W); }
+    
+    /*! 
+     * \brief Metoda ustawiajaca macierz rotacji.
+     *
+     * Metoda ustawiajaca macierz rotacji.
+     * param[in] - M - macierz ktorej elementy maja zostac ustawione.
+     * param[in] - alfa - kat obrotu w stopniach.
+     */
+    Macierz2x2 StworzMacierzRotacji(Macierz2x2 M, double alfa);
+    
+    /*!
+     * \brief Metoda zwracaja rozmiar obiektu.
+     *
+     * Metoda zwracajaca rozmiar obiektu.
+     */
+    unsigned int RozmiarObiektu() const { return Tab_Wierzcholkow.RozmiarTablicyWierzcholkow(); }
+    
+    /*!
+     * \brief Metoda pozwalajaca zidentyfikowac obiekt.
+     *
+     * Metoda pozwalajaca zidentyfikowac obiekt.
+     */
+    virtual const char* NazwaObiektu() const { return "Obiekt2D"; }
+    
+    /*!
+     * \brief Konstruktor.
+     *
+     * Konstruktor.
+     */
+    Obiekt2D() { }
+    
+    /*!
+     * \brief Destruktor.
+     *
+     * Destruktor.
+     */
+    virtual ~Obiekt2D() { }
+};
+
+/*!
+ * \brief Przeciazenie operatora pisania do strumienia wyjsciowego dla klasy Obiekt2D.
+ *
+ * Przeciazenie operatora pisania do strumienia wyjsciowego dla klasy Obiekt2D.
+ * Pozwala wypisac na wyjscie wektory reprezentujace wspolrzedne.
+ * param[in] - StrmWy - referencja do strumiena wyjsciowego.
+ * param[in] - O - obiekt ktorego elementy chcemy wypisac.
+ */
+std::ostream& operator << (std::ostream& StrmWy, Obiekt2D O);
+
+#endif
